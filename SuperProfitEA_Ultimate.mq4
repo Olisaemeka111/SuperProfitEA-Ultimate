@@ -1,8 +1,4 @@
-//+------------------------------------------------------------------+
-//|                                           SuperProfitEA_Ultimate.mq4|
-//|                        Copyright 2024, Ultimate Combined Strategy  |
-//|                                                                  |
-//+------------------------------------------------------------------+
+//+-----------------------
 #property strict
 
 // Input parameters - General Settings

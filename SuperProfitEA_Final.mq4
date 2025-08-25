@@ -1,9 +1,4 @@
-//+------------------------------------------------------------------+
-//|                                                 SuperProfitEA.mq4|
-//|                        Copyright 2024, Combined Strategy System  |
-//|                                                                  |
-//+------------------------------------------------------------------+
-#property strict
+
 
 // Input parameters - General Settings
 extern string EA_Name = "SuperProfitEA";
