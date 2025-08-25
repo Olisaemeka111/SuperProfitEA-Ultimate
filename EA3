@@ -1,0 +1,61 @@
+//+------------------------------------------------------------------+
+//|                                                     WilliamsR.mq4|
+//|                        Copyright 2024, MetaQuotes Software Corp. |
+//|                                       http://www.metaquotes.net/ |
+//+------------------------------------------------------------------+
+#property strict
+
+// Input parameters
+input int WilliamsR_Period = 14;  // Period for Williams %R calculation
+input int Trade_Lots = 0.1;       // Lot size for trading
+input int StopLoss = 50;          // Stop Loss in pips
+input int TakeProfit = 100;       // Take Profit in pips
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+  {
+   return(INIT_SUCCEEDED);
+  }
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+  {
+  }
+//+------------------------------------------------------------------+
+//| Expert tick function                                            |
+//+------------------------------------------------------------------+
+void OnTick()
+  {
+   double williamsR = iWPR(NULL, 0, WilliamsR_Period, 0);
+   int ticket;
+   
+   // Check for Buy conditions
+   if (williamsR <= -90 && williamsR >= -100)
+   {
+      ticket = OrderSend(Symbol(), OP_BUY, Trade_Lots, Ask, 2, 0, 0, "Buy Order", 0, 0, Green);
+      if (ticket > 0)
+      {
+         if (!OrderModify(ticket, Ask - StopLoss * Point, Ask + TakeProfit * Point, 0))
+            Print("Error modifying order ", GetLastError());
+      }
+      else
+         Print("Error sending buy order ", GetLastError());
+   }
+   
+   // Check for Sell conditions
+   if (williamsR >= -10 && williamsR <= 0)
+   {
+      ticket = OrderSend(Symbol(), OP_SELL, Trade_Lots, Bid, 2, 0, 0, "Sell Order", 0, 0, Red);
+      if (ticket > 0)
+      {
+         if (!OrderModify(ticket, Bid + StopLoss * Point, Bid - TakeProfit * Point, 0))
+            Print("Error modifying order ", GetLastError());
+      }
+      else
+         Print("Error sending sell order ", GetLastError());
+   }
+  }
+//+------------------------------------------------------------------+

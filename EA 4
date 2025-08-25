@@ -1,0 +1,104 @@
+//+------------------------------------------------------------------+
+//|                                                     WilliamsR.mq4|
+//|                        Copyright 2024, MetaQuotes Software Corp. |
+//|                                       http://www.metaquotes.net/ |
+//+------------------------------------------------------------------+
+#property strict
+
+// Input parameters
+input int WilliamsR_Period = 14;          // Period for Williams %R calculation
+input double Trade_Lots = 0.1;             // Lot size for trading
+input int MaxTradesPerTrend = 30;          // Maximum number of trades per trend
+input int MA_Period = 50;                  // Period for the moving average
+input ENUM_MA_METHOD MA_Method = MODE_SMA; // Method for the moving average
+input ENUM_APPLIED_PRICE MA_Price = PRICE_CLOSE; // Price type for the moving average
+
+int totalBuyTrades = 0; // Track total buy trades
+int totalSellTrades = 0; // Track total sell trades
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Expert deinitialization function                                 |
+//+------------------------------------------------------------------+
+void OnDeinit(const int reason)
+{
+}
+
+//+------------------------------------------------------------------+
+//| Expert tick function                                            |
+//+------------------------------------------------------------------+
+void OnTick()
+{
+    double williamsR = iWPR(NULL, 0, WilliamsR_Period, 0);
+    double maValue = iMA(NULL, 0, MA_Period, 0, MA_Method, MA_Price, 0);
+    int ticket;
+
+    // Close all open buy trades when Williams %R is between -30 and 0
+    if (williamsR >= -30 && williamsR <= 0)
+    {
+        for (int i = OrdersTotal() - 1; i >= 0; i--)
+        {
+            if (OrderSelect(i, SELECT_BY_POS) && OrderType() == OP_BUY)
+            {
+                if (OrderClose(OrderTicket(), OrderLots(), MarketInfo(OrderSymbol(), MODE_BID), 3))
+                {
+                    totalBuyTrades--;
+                }
+                else
+                {
+                    Print("Error closing buy order ", GetLastError());
+                }
+            }
+        }
+    }
+
+    // Close all open sell trades when Williams %R is between -70 and -100
+    if (williamsR >= -100 && williamsR <= -70)
+    {
+        for (int i = OrdersTotal() - 1; i >= 0; i--)
+        {
+            if (OrderSelect(i, SELECT_BY_POS) && OrderType() == OP_SELL)
+            {
+                if (OrderClose(OrderTicket(), OrderLots(), MarketInfo(OrderSymbol(), MODE_ASK), 3))
+                {
+                    totalSellTrades--;
+                }
+                else
+                {
+                    Print("Error closing sell order ", GetLastError());
+                }
+            }
+        }
+    }
+
+    // Check for Buy conditions
+    if (williamsR <= -90 && williamsR >= -100 && totalBuyTrades < MaxTradesPerTrend && Close[1] > maValue)
+    {
+        ticket = OrderSend(Symbol(), OP_BUY, Trade_Lots, Ask, 2, 0, 0, "Buy Order", 0, 0, Green);
+        if (ticket > 0)
+        {
+            totalBuyTrades++;
+        }
+        else
+            Print("Error sending buy order ", GetLastError());
+    }
+
+    // Check for Sell conditions
+    if (williamsR >= -10 && williamsR <= 0 && totalSellTrades < MaxTradesPerTrend && Close[1] < maValue)
+    {
+        ticket = OrderSend(Symbol(), OP_SELL, Trade_Lots, Bid, 2, 0, 0, "Sell Order", 0, 0, Red);
+        if (ticket > 0)
+        {
+            totalSellTrades++;
+        }
+        else
+            Print("Error sending sell order ", GetLastError());
+    }
+}
