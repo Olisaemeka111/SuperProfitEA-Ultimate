@@ -1,0 +1,92 @@
+; SuperProfitEA Multi-Symbol Scanner - Aggressive 5-Second Scanning Settings
+; Optimized for maximum trade opportunities and fast execution
+
+; Scanner Settings
+EnableScanner=true
+MaxSymbolsToTrade=100
+ScanInterval=5
+TradeOnlyMajors=false
+CustomSymbols=
+
+; Money Management
+InitialLots=0.01
+LotExponent=1.18
+lotdecimal=2
+MaxLots=10.0
+UseMoneyManagement=true
+RiskPercent=1.5
+TakeProfit=80.0
+StopLoss=0.0
+UseNoStopLossMode=true
+
+; Trade Management
+MaxTradesPerSymbol=8
+MaxTotalTrades=150
+UseTrailingStop=true
+TrailStart=10.0
+TrailStop=3.0
+slip=3
+
+; Williams %R Settings
+WilliamsR_Period=14
+WilliamsR_BuyLevel=-90.0
+WilliamsR_SellLevel=-10.0
+WilliamsR_CloseBuyLevel=-30.0
+WilliamsR_CloseSellLevel=-70.0
+
+; Moving Average Settings
+FastMA_Period=20
+SlowMA_Period=50
+SignalMA_Period=9
+MA_Method=1
+MA_Price=0
+
+; RSI Settings
+RSI_Period=14
+RSI_BuyLevel=30
+RSI_SellLevel=70
+
+; CCI Settings
+CCI_Period=13
+CCI_BuyLevel=-100.0
+CCI_SellLevel=100.0
+
+; Stochastic Settings
+Stoch_K_Period=5
+Stoch_D_Period=3
+Stoch_Slowing=3
+Stoch_BuyLevel=20.0
+Stoch_SellLevel=80.0
+
+; Bollinger Bands Settings
+BB_Period=20
+BB_Deviation=2.0
+BB_BuyLevel=0.2
+BB_SellLevel=0.8
+
+; MACD Settings
+MACD_Fast=12
+MACD_Slow=26
+MACD_Signal=9
+
+; Profit Target Settings
+UseEquityStop=true
+TotalEquityRisk=15.0
+ProfitTargetInPips=false
+ProfitTarget=20.0
+CloseAllNow=false
+CloseProfitableTradesOnly=false
+ProfitableTradeAmount=0.5
+
+; No Stop Loss Strategy Settings
+UseBreakEvenMode=true
+BreakEvenTrigger=15.0
+UseTrailingProfit=true
+TrailingProfitStart=25.0
+
+; Advanced Settings
+UseMultiTimeframe=true
+UseNewsFilter=false
+UseVolatilityFilter=true
+MinSpread=2.0
+MaxSpread=100.0

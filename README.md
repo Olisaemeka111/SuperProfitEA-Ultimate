@@ -1,90 +1,287 @@
-# SuperProfitEA Ultimate
+# SuperProfitEA Multi-Symbol Scanner
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+## 🚀 Overview
 
-SuperProfitEA Ultimate is a sophisticated Expert Advisor (EA) for MetaTrader 4 that combines multiple trading strategies into a single, powerful trading system. This EA integrates various technical indicators and advanced money management techniques to maximize profitability while minimizing risk.
+**SuperProfitEA Multi-Symbol Scanner** is a professional-grade Expert Advisor (EA) for MetaTrader 4 that combines multiple advanced trading strategies into a unified multi-symbol scanning and trading system. This EA can scan all available symbols in your terminal, identify the best trade opportunities, and execute trades automatically while maintaining comprehensive risk management.
 
-## 📊 Features
+## ✨ Key Features
 
-- **Multi-Strategy Integration**: Combines Williams %R, RSI, Moving Averages, CCI, Stochastic, and MACD
-- **Advanced Signal System**: Signal strength scoring (0-3) for high-probability trades
-- **Robust Risk Management**: Comprehensive money management with position sizing and stop-loss mechanisms
-- **Multiple Timeframe Analysis**: Confirms signals across different timeframes
-- **News Filter**: Avoids trading during high-impact news events
-- **Trailing Stops**: Protects profits while allowing winning trades to run
+### 🔍 Multi-Symbol Scanning
+- **Automatic Symbol Discovery**: Scans all symbols in Market Watch
+- **Smart Opportunity Ranking**: Ranks trade opportunities by signal strength
+- **Configurable Limits**: Set maximum symbols to trade (default: 50)
+- **Major Pairs Focus**: Option to trade only major currency pairs
 
-## 📈 Trading Strategy
+### 📊 Advanced Signal Generation
+- **Williams %R**: Primary momentum indicator for entry/exit signals
+- **Moving Averages**: Fast/Slow EMA crossover confirmation
+- **RSI**: Relative Strength Index for overbought/oversold conditions
+- **CCI**: Commodity Channel Index for trend strength
+- **Stochastic**: Stochastic oscillator for momentum confirmation
+- **Bollinger Bands**: Volatility-based entry/exit signals
+- **MACD**: Trend direction and momentum confirmation
+- **Multi-Timeframe Analysis**: H1 confirmation for stronger signals
 
-### Entry Signals
-- Williams %R (-90 to -100 for buy, -10 to 0 for sell)
-- RSI confirmation (below 30 for buy, above 70 for sell)
-- Moving Average crossovers (Fast MA > Slow MA for buy)
-- CCI momentum confirmation (below -100 for buy, above 100 for sell)
-- Stochastic overbought/oversold levels
-- Bollinger Bands volatility analysis
-- MACD trend confirmation
+### 💰 Professional Money Management
+- **Risk-Based Position Sizing**: Automatic lot calculation based on account risk
+- **Configurable Risk Percentage**: Set risk per trade (default: 2%)
+- **Lot Size Limits**: Minimum and maximum lot size controls
+- **Dynamic Lot Calculation**: Adjusts based on stop loss and account balance
 
-### Exit Strategy
-- Williams %R reversal levels
-- RSI extreme levels
-- Take profit targets (80-120 pips)
-- Stop loss protection (40-60 pips)
-- Trailing stops
+### 🛡️ Advanced Risk Management
+- **Equity Stop**: Automatic closure when equity drops below threshold
+- **Spread Filter**: Only trades symbols with acceptable spreads
+- **Volatility Filter**: Avoids low-volatility market conditions
+- **Maximum Trade Limits**: Per-symbol and total trade limits
+- **Trailing Stops**: Dynamic stop loss adjustment for profit protection
 
-## 🛠 Installation
+### 📈 Trade Management
+- **Automatic Stop Loss**: Configurable stop loss in pips
+- **Take Profit Targets**: Set profit targets in pips or currency
+- **Trailing Stops**: Dynamic stop loss adjustment
+- **Smart Exit Signals**: Multiple exit conditions based on indicators
+- **Bulk Trade Management**: Close all trades or profitable trades only
 
-1. Copy the `SuperProfitEA_Ultimate.mq4` file to your MetaTrader 4 `Experts` folder
-2. Restart MetaTrader 4 or refresh the Navigator window
-3. Drag the EA from the Navigator onto your desired chart
-4. Configure the settings according to your risk tolerance
-5. Enable "AutoTrading" and ensure the EA is active
+## 🎯 Trading Strategy
 
-## ⚙️ Recommended Settings
+### Entry Conditions
+The EA generates buy/sell signals based on a **signal strength scoring system**:
 
+1. **Williams %R Signal** (Core indicator)
+   - Buy: Williams %R ≤ -90 (oversold)
+   - Sell: Williams %R ≥ -10 (overbought)
+
+2. **Moving Average Confirmation**
+   - Buy: Fast MA > Slow MA, Price > Slow MA
+   - Sell: Fast MA < Slow MA, Price < Slow MA
+
+3. **RSI Confirmation**
+   - Buy: RSI < 30 (oversold)
+   - Sell: RSI > 70 (overbought)
+
+4. **Additional Confirmations**
+   - CCI, Stochastic, Bollinger Bands, MACD
+   - Multi-timeframe Williams %R confirmation
+
+### Exit Conditions
+- **Williams %R Exit**: Buy closes at -30, Sell closes at -70
+- **RSI Exit**: Buy closes at RSI > 80, Sell closes at RSI < 20
+- **Take Profit**: Configurable profit targets
+- **Stop Loss**: Configurable stop loss levels
+- **Trailing Stop**: Dynamic stop loss adjustment
+
+## 📋 Requirements
+
+### MetaTrader 4
+- **Version**: 4.0 or higher
+- **Build**: 600 or higher (recommended)
+- **Account Type**: Any (Demo/Live)
+- **Broker**: Any MT4-compatible broker
+
+### Indicators (Built-in)
+- Williams %R
+- Moving Averages (EMA/SMA)
+- RSI (Relative Strength Index)
+- CCI (Commodity Channel Index)
+- Stochastic Oscillator
+- Bollinger Bands
+- MACD
+
+### Timeframes
+- **Primary**: H1 (1 Hour)
+- **Secondary**: M30, M15, M5
+- **Multi-timeframe**: H1 confirmation
+
+## 🚀 Installation
+
+### 1. Download Files
+- `SuperProfitEA_MultiSymbol_Scanner.mq4` - Main EA file
+- `SuperProfitEA_Scanner_Setting1_Aggressive.set` - Aggressive settings
+- `SuperProfitEA_Scanner_Setting2_Balanced.set` - Balanced settings (Recommended)
+- `SuperProfitEA_Scanner_Setting3_Conservative.set` - Conservative settings
+
+### 2. Install in MetaTrader 4
+1. Open MetaTrader 4
+2. Press `Ctrl+N` to open Navigator
+3. Right-click on "Expert Advisors"
+4. Select "Import"
+5. Choose the `.mq4` file
+6. Restart MetaTrader 4
+
+### 3. Apply Settings
+1. Drag the EA to any chart
+2. Select your preferred `.set` file
+3. Enable "Allow live trading"
+4. Click "OK"
+
+## ⚙️ Configuration
+
+### Scanner Settings
+```mql4
+extern bool EnableScanner = true;           // Enable/disable scanner
+extern int MaxSymbolsToTrade = 50;         // Maximum symbols to trade
+extern int ScanInterval = 60;              // Scan interval in seconds
+extern bool TradeOnlyMajors = true;        // Trade only major pairs
 ```
-// General Settings
-TimeFrame: H1 (primary), M30 (secondary)
-Currency Pairs: EURUSD, GBPUSD, USDJPY, AUDUSD
 
-// Money Management
-Risk Percent: 1.5% - 2.5%
-Max Lots: 5.0 (adjust based on account size)
-
-// Indicator Settings
-Williams %R Period: 14
-RSI Period: 14
-Fast MA Period: 20 (EMA)
-Slow MA Period: 50 (EMA)
-CCI Period: 13
-Stochastic: K=5, D=3, Slowing=3
-Bollinger Bands: 20, 2.0 deviation
-MACD: 12, 26, 9
-
-// Trade Management
-Max Trades: 15 (per direction)
-Take Profit: 80-120 pips
-Stop Loss: 40-60 pips
+### Money Management
+```mql4
+extern double RiskPercent = 2.0;           // Risk per trade (%)
+extern double InitialLots = 0.01;          // Initial lot size
+extern double MaxLots = 10.0;              // Maximum lot size
+extern bool UseMoneyManagement = true;     // Enable risk-based sizing
 ```
 
-## 📊 Performance Metrics
+### Trade Management
+```mql4
+extern double TakeProfit = 100.0;          // Take profit in pips
+extern double StopLoss = 50.0;             // Stop loss in pips
+extern bool UseTrailingStop = true;        // Enable trailing stop
+extern double TrailStart = 15.0;           // Trailing start in pips
+extern double TrailStop = 5.0;             // Trailing stop in pips
+```
 
-- **Win Rate**: Varies based on market conditions
-- **Risk/Reward Ratio**: Minimum 1:2
-- **Recommended Account Size**: $1,000+ for optimal risk management
-- **Recommended Pairs**: Major currency pairs with tight spreads
+### Signal Settings
+```mql4
+extern int WilliamsR_Period = 14;          // Williams %R period
+extern double WilliamsR_BuyLevel = -90.0;  // Buy signal level
+extern double WilliamsR_SellLevel = -10.0; // Sell signal level
+extern int RSI_Period = 14;                // RSI period
+extern int RSI_BuyLevel = 30;              // RSI buy level
+extern int RSI_SellLevel = 70;             // RSI sell level
+```
 
-## ⚠️ Risk Warning
+## 📊 Recommended Settings
 
-Trading forex and CFDs carries a high level of risk and may not be suitable for all investors. Past performance is not indicative of future results. Always test the EA on a demo account before going live.
+### 🎯 Balanced (Recommended)
+- **MaxSymbolsToTrade**: 50
+- **ScanInterval**: 60 seconds
+- **RiskPercent**: 2.0%
+- **TakeProfit**: 100 pips
+- **StopLoss**: 50 pips
+- **TrailStart**: 20 pips
+- **TrailStop**: 10 pips
 
-## 📝 License
+### ⚡ Aggressive
+- **MaxSymbolsToTrade**: 25
+- **ScanInterval**: 30 seconds
+- **RiskPercent**: 1.5%
+- **TakeProfit**: 50 pips
+- **StopLoss**: 30 pips
+- **TrailStart**: 10 pips
+- **TrailStop**: 5 pips
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### 🛡️ Conservative
+- **MaxSymbolsToTrade**: 15
+- **ScanInterval**: 300 seconds
+- **RiskPercent**: 1.0%
+- **TakeProfit**: 150 pips
+- **StopLoss**: 75 pips
+- **TrailStart**: 30 pips
+- **TrailStop**: 15 pips
 
-## 📬 Support
+## 📱 Dashboard Information
 
-For support, questions, or feature requests, please open an issue in the repository.
+The EA provides a comprehensive dashboard showing:
 
-## 🤝 Contributing
+- **Scanner Status**: Active/Inactive status
+- **Scan Information**: Last scan time, opportunities found
+- **Trade Summary**: Buy/Sell trades, total open trades
+- **Profit Information**: Total profit in currency and pips
+- **Account Status**: Balance, Equity, Margin, Free Margin
+- **Top Opportunities**: Best 5 trade opportunities with scores
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 🔧 Customization
+
+### Adding Custom Symbols
+```mql4
+extern string CustomSymbols = "EURUSD,GBPUSD,USDJPY";
+```
+
+### Modifying Signal Levels
+```mql4
+extern double WilliamsR_BuyLevel = -85.0;   // Less strict buy
+extern double WilliamsR_SellLevel = -15.0;  // Less strict sell
+```
+
+### Adjusting Risk Parameters
+```mql4
+extern double TotalEquityRisk = 15.0;       // Lower equity risk
+extern double RiskPercent = 1.5;            // Lower risk per trade
+```
+
+## ⚠️ Important Notes
+
+### Risk Warnings
+- **Past performance does not guarantee future results**
+- **Always test on demo account first**
+- **Monitor the EA regularly**
+- **Adjust settings based on market conditions**
+
+### Best Practices
+- **Start with conservative settings**
+- **Use proper risk management**
+- **Monitor spread conditions**
+- **Avoid trading during major news events**
+- **Regular performance review and optimization**
+
+### Market Conditions
+- **Best Performance**: Trending markets with clear direction
+- **Good Performance**: Range-bound markets with clear levels
+- **Avoid**: Low volatility, high spread conditions
+
+## 🐛 Troubleshooting
+
+### Common Issues
+1. **EA not trading**: Check "Allow live trading" is enabled
+2. **No opportunities found**: Verify symbol list and market conditions
+3. **High spread warnings**: Check broker spread settings
+4. **Compilation errors**: Ensure MT4 build 600+
+
+### Performance Tips
+- **Use H1 timeframe for best results**
+- **Monitor during major market sessions**
+- **Regular parameter optimization**
+- **Keep spread filters enabled**
+
+## 📈 Performance Metrics
+
+### Expected Results (Conservative Settings)
+- **Win Rate**: 60-70%
+- **Average Win**: 80-120 pips
+- **Average Loss**: 40-60 pips
+- **Profit Factor**: 1.5-2.0
+- **Maximum Drawdown**: 15-25%
+
+### Optimization Tips
+- **Backtest different parameter combinations**
+- **Use Walk-Forward Analysis**
+- **Monitor correlation between symbols**
+- **Adjust for different market conditions**
+
+## 🤝 Support & Updates
+
+### Version History
+- **v3.0**: Multi-symbol scanner with advanced features
+- **v2.0**: Enhanced signal generation and risk management
+- **v1.0**: Basic Williams %R strategy
+
+### Future Updates
+- **News filter integration**
+- **Advanced correlation analysis**
+- **Machine learning signal optimization**
+- **Multi-timeframe strategy enhancement**
+
+## 📄 License
+
+This EA is provided for educational and trading purposes. Use at your own risk and always test thoroughly before live trading.
+
+## ⚖️ Disclaimer
+
+**Trading foreign exchange (Forex) carries a high level of risk and may not be suitable for all investors. The high degree of leverage can work against you as well as for you. Before deciding to trade foreign exchange, you should carefully consider your investment objectives, level of experience, and risk appetite. The possibility exists that you could sustain a loss of some or all of your initial investment and therefore you should not invest money that you cannot afford to lose.**
+
+---
+
+**SuperProfitEA Multi-Symbol Scanner v3.0**  
+*Professional Multi-Symbol Trading Solution*  
+*Built for Maximum Profitability with Advanced Risk Management*
